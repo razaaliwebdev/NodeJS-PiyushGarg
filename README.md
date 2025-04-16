@@ -6,6 +6,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 
 1. [Hello World Example](#hello-world-example)
 2. [Modules Example](#modules-example)
+3. [File Handling Example](#file-handling-example)
 
 ## Hello World Example
 
@@ -74,6 +75,105 @@ console.log("SubFn", sub(34, 8));
 AddFn 43
 SubFn 26
 ```
+
+## File Handling Example
+
+This example demonstrates various file operations in Node.js using the built-in `fs` (File System) module.
+
+### Project Structure
+
+- `file.js` - Main file containing file operations examples
+- `test.txt` - Sample text file
+- `contact.txt` - Sample contact information file
+- `my-docs/` - Directory created through file operations
+
+### Features Demonstrated
+
+1. **File Writing**
+
+   - Synchronous writing using `writeFileSync`
+   - Asynchronous writing using `writeFile`
+
+2. **File Reading**
+
+   - Synchronous reading using `readFileSync`
+   - Asynchronous reading using `readFile`
+
+3. **File Appending**
+
+   - Appending content to files using `appendFileSync`
+
+4. **File Operations**
+
+   - Copying files using `cpSync`
+   - Deleting files using `unlinkSync`
+   - Getting file statistics using `statSync`
+
+5. **Directory Operations**
+   - Creating directories using `mkdirSync`
+   - Creating nested directories using `mkdirSync` with `recursive` option
+
+### Code Examples
+
+#### Writing to a File
+
+```javascript
+// Synchronous
+fs.writeFileSync("./test.txt", "Do Something Great...");
+
+// Asynchronous
+fs.writeFile("./test.txt", "Created via Async", (error) => {});
+```
+
+#### Reading from a File
+
+```javascript
+// Synchronous
+const result = fs.readFileSync("./contact.txt", "utf-8");
+console.log(result);
+
+// Asynchronous
+fs.readFile("./contact.txt", "utf-8", (error, result) => {
+  if (error) {
+    console.log("Error:", error);
+  } else {
+    console.log(result);
+  }
+});
+```
+
+#### Appending to a File
+
+```javascript
+fs.appendFileSync("./test.txt", `${Date.now()}Hello Everyone!\n`);
+```
+
+#### Directory Operations
+
+```javascript
+// Create a single directory
+fs.mkdirSync("my-docs");
+
+// Create nested directories
+fs.mkdirSync("my-docs/a/b", { recursive: true });
+```
+
+### Running the Program
+
+1. Navigate to the `03_fileHandling` directory
+2. Run the program using:
+   ```bash
+   node file.js
+   ```
+
+### Expected Output
+
+The program demonstrates various file operations. You can observe:
+
+- New files being created
+- Content being written to files
+- Directories being created
+- Files being copied and deleted
 
 ## Prerequisites
 
