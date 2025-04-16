@@ -78,7 +78,7 @@ SubFn 26
 
 ## File Handling Example
 
-This example demonstrates various file operations in Node.js using the built-in `fs` (File System) module.
+This example demonstrates various file operations in Node.js using the built-in `fs` (File System) module and OS operations using the `os` module.
 
 ### Project Structure
 
@@ -89,31 +89,68 @@ This example demonstrates various file operations in Node.js using the built-in 
 
 ### Features Demonstrated
 
-1. **File Writing**
+1. **OS Operations**
+
+   - Getting CPU information using `os.cpus()`
+   - Understanding thread pool size (default: 4, max: 8 for 8-core CPU)
+
+2. **File Writing**
 
    - Synchronous writing using `writeFileSync`
    - Asynchronous writing using `writeFile`
 
-2. **File Reading**
+3. **File Reading**
 
    - Synchronous reading using `readFileSync`
    - Asynchronous reading using `readFile`
 
-3. **File Appending**
+4. **File Appending**
 
    - Appending content to files using `appendFileSync`
 
-4. **File Operations**
+5. **File Operations**
 
    - Copying files using `cpSync`
    - Deleting files using `unlinkSync`
    - Getting file statistics using `statSync`
 
-5. **Directory Operations**
+6. **Directory Operations**
+
    - Creating directories using `mkdirSync`
    - Creating nested directories using `mkdirSync` with `recursive` option
 
+7. **Blocking vs Non-Blocking Operations**
+   - Demonstrating synchronous (blocking) operations
+   - Demonstrating asynchronous (non-blocking) operations
+
 ### Code Examples
+
+#### OS Operations
+
+```javascript
+const os = require("os");
+console.log(os.cpus().length); // Get number of CPU cores
+```
+
+#### Blocking vs Non-Blocking Operations
+
+```javascript
+// Blocking (Synchronous) Example
+console.log(1);
+const result = fs.readFileSync("contact.txt", "utf-8");
+console.log(result);
+console.log(2);
+// Output will be in order: 1, file content, 2
+
+// Non-Blocking (Asynchronous) Example
+fs.readFile("contact.txt", "utf-8", (error, result) => {
+  console.log(result);
+});
+console.log(1);
+console.log(2);
+console.log(3);
+// Output order may vary: 1, 2, 3, file content
+```
 
 #### Writing to a File
 
@@ -168,12 +205,21 @@ fs.mkdirSync("my-docs/a/b", { recursive: true });
 
 ### Expected Output
 
-The program demonstrates various file operations. You can observe:
+The program demonstrates various file operations and system information. You can observe:
 
+- CPU core count
 - New files being created
 - Content being written to files
 - Directories being created
 - Files being copied and deleted
+- Different behavior between blocking and non-blocking operations
+
+### Important Notes
+
+- The default thread pool size in Node.js is 4
+- The maximum thread pool size depends on your CPU cores (e.g., 8 for an 8-core CPU)
+- Blocking operations can impact performance as they wait for completion
+- Non-blocking operations are generally preferred for better performance
 
 ## Prerequisites
 
