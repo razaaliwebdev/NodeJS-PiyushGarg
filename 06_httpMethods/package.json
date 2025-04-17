@@ -1,0 +1,12 @@
+{
+  "name": "06_httpmethods",
+  "version": "1.0.0",
+  "main": "methods.js",
+  "scripts": {
+    "start": "node methods.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
