@@ -8,6 +8,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 2. [Modules Example](#modules-example)
 3. [File Handling Example](#file-handling-example)
 4. [HTTP Server Example](#http-server-example)
+5. [URL Handling Example](#url-handling-example)
 
 ## Hello World Example
 
@@ -276,19 +277,23 @@ Hey there ! i am javascript
 This example demonstrates how to create a basic HTTP server in Node.js using the built-in `http` module, including request handling and logging.
 
 ### Project Structure
+
 - `index.js` - Basic HTTP server implementation
 - `log.js` - HTTP server with request logging
 - `log.txt` - Log file containing request history
 - `package.json` - Project configuration
 
 ### Features Demonstrated
+
 1. **Basic HTTP Server**
+
    - Creating an HTTP server using `http.createServer()`
    - Handling incoming requests
    - Sending responses
    - Server listening on a specific port
 
 2. **Request Logging**
+
    - Logging request details to a file
    - Using timestamps for request tracking
    - Handling different URL routes
@@ -303,57 +308,66 @@ This example demonstrates how to create a basic HTTP server in Node.js using the
 ### Code Examples
 
 #### Basic HTTP Server (index.js)
+
 ```javascript
 const http = require("http");
 
 const server = http.createServer((req, res) => {
-    console.log(req);
-    res.end("Hello World from the HTTP Server.");
+  console.log(req);
+  res.end("Hello World from the HTTP Server.");
 });
 
 const port = 3000;
 server.listen(port, () => {
-    console.log(`Server is running on the port : ${port}`);
+  console.log(`Server is running on the port : ${port}`);
 });
 ```
 
 #### HTTP Server with Logging (log.js)
+
 ```javascript
 const http = require("http");
 const fs = require("fs");
 
 const server = http.createServer((req, res) => {
-    const log = `${Date.now()}:${req.url}: New REQ Received\n`;
-    fs.appendFile("log.txt", log, (error, data) => {
-        switch (req.url) {
-            case "/": res.end("Home Page");
-                break;
-            case "/about": res.end("I am Raza Ali");
-                break;
-            default: res.end("404 Not Found..");
-        }
-    });
+  const log = `${Date.now()}:${req.url}: New REQ Received\n`;
+  fs.appendFile("log.txt", log, (error, data) => {
+    switch (req.url) {
+      case "/":
+        res.end("Home Page");
+        break;
+      case "/about":
+        res.end("I am Raza Ali");
+        break;
+      default:
+        res.end("404 Not Found..");
+    }
+  });
 });
 
 const port = 3000;
 server.listen(port, () => {
-    console.log(`Server is running on the port :${port}`);
+  console.log(`Server is running on the port :${port}`);
 });
 ```
 
 ### Running the Program
+
 1. Navigate to the `04_httpServer` directory
 2. Run either server using:
+
    ```bash
    # For basic server
    node index.js
-   
+
    # For server with logging
    node log.js
    ```
 
 ### Expected Output
+
 1. **Basic Server**
+
    - Server starts and listens on port 3000
    - Console shows request details when accessed
    - Browser shows "Hello World from the HTTP Server" message
@@ -367,15 +381,147 @@ server.listen(port, () => {
      - Other URLs → "404 Not Found.."
 
 ### Log File Format
+
 The `log.txt` file contains entries in the following format:
+
 ```
 [timestamp]:[url]: New REQ Received
 ```
+
 Example:
+
 ```
 1744907012419:/: New REQ Received
 1744907017888:/about: New REQ Received
 ```
+
+## Prerequisites
+
+- **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
+
+## URL Handling Example
+
+This example demonstrates how to handle and parse URLs in a Node.js HTTP server, including query parameters and path-based routing.
+
+### Project Structure
+
+- `url.js` - HTTP server with URL parsing and handling
+- `urls.txt` - Log file containing URL request history
+- `package.json` - Project configuration
+
+### Features Demonstrated
+
+1. **URL Parsing**
+
+   - Using Node.js built-in `url` module
+   - Parsing URL components (pathname, query parameters)
+   - Handling different URL formats
+
+2. **Query Parameter Handling**
+
+   - Extracting query parameters from URLs
+   - Using query parameters in responses
+   - Handling multiple query parameters
+
+3. **Path-based Routing**
+
+   - Implementing different routes based on URL pathname
+   - Handling root path (/)
+   - Handling about page with dynamic content
+   - Implementing search functionality
+   - Handling 404 cases
+
+4. **Request Logging**
+   - Logging URL requests with timestamps
+   - Storing request history in a file
+   - Filtering out favicon requests
+
+### Code Examples
+
+#### URL Handling Server (url.js)
+
+```javascript
+const http = require("http");
+const fs = require("fs");
+const url = require("url");
+
+const server = http.createServer((req, res) => {
+  if (req.url === "/favicon.ico") {
+    return res.end();
+  }
+  const log = `${Date.now()}:/${req.url} : New REQ Received.\n`;
+  const myUrl = url.parse(req.url, true);
+  console.log(myUrl);
+  fs.appendFile("urls.txt", log, (error, data) => {
+    switch (myUrl.pathname) {
+      case "/":
+        res.end("Home Page");
+        break;
+      case "/about":
+        const username = myUrl.query.myname;
+        res.end(`Hi, ${username}`);
+        break;
+      case "/search":
+        const search = myUrl.query.search_query;
+        res.end(`Here are your results for ${search}`);
+      default:
+        res.end("404 Not Found");
+    }
+  });
+});
+
+const port = 3000;
+server.listen(port, () => {
+  console.log(`Server is running on the port : ${port}`);
+});
+```
+
+### Running the Program
+
+1. Navigate to the `05_url` directory
+2. Run the server using:
+   ```bash
+   node url.js
+   ```
+
+### Expected Output
+
+1. **Server Response Examples**
+
+   - Root path (`/`) → "Home Page"
+   - About page with name (`/about?myname=raza`) → "Hi, raza"
+   - Search page (`/search?search_query=javascript`) → "Here are your results for javascript"
+   - Invalid paths → "404 Not Found"
+
+2. **URL Logging**
+   The `urls.txt` file contains entries in the following format:
+   ```
+   [timestamp]:/[url] : New REQ Received.
+   ```
+   Example entries:
+   ```
+   1744910826739://about?myname=raza : New REQ Received.
+   1744911213473://search?search_query=javaScript+mastery+by+piyush : New REQ Received.
+   ```
+
+### URL Examples
+
+1. **Home Page**
+
+   ```
+   http://localhost:3000/
+   ```
+
+2. **About Page with Name**
+
+   ```
+   http://localhost:3000/about?myname=raza
+   ```
+
+3. **Search Page**
+   ```
+   http://localhost:3000/search?search_query=javascript+mastery
+   ```
 
 ## Prerequisites
 
