@@ -7,6 +7,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 1. [Hello World Example](#hello-world-example)
 2. [Modules Example](#modules-example)
 3. [File Handling Example](#file-handling-example)
+4. [HTTP Server Example](#http-server-example)
 
 ## Hello World Example
 
@@ -264,3 +265,118 @@ These instructions will help you run the program on your local machine.
 ### Expected Output
 
 After running the command, you should see the following output in your terminal:
+
+```
+Hello World from the node js
+Hey there ! i am javascript
+```
+
+## HTTP Server Example
+
+This example demonstrates how to create a basic HTTP server in Node.js using the built-in `http` module, including request handling and logging.
+
+### Project Structure
+- `index.js` - Basic HTTP server implementation
+- `log.js` - HTTP server with request logging
+- `log.txt` - Log file containing request history
+- `package.json` - Project configuration
+
+### Features Demonstrated
+1. **Basic HTTP Server**
+   - Creating an HTTP server using `http.createServer()`
+   - Handling incoming requests
+   - Sending responses
+   - Server listening on a specific port
+
+2. **Request Logging**
+   - Logging request details to a file
+   - Using timestamps for request tracking
+   - Handling different URL routes
+   - File system integration for logging
+
+3. **Route Handling**
+   - Handling different URL paths
+   - Implementing a simple routing system
+   - Sending appropriate responses for different routes
+   - Handling 404 cases
+
+### Code Examples
+
+#### Basic HTTP Server (index.js)
+```javascript
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+    console.log(req);
+    res.end("Hello World from the HTTP Server.");
+});
+
+const port = 3000;
+server.listen(port, () => {
+    console.log(`Server is running on the port : ${port}`);
+});
+```
+
+#### HTTP Server with Logging (log.js)
+```javascript
+const http = require("http");
+const fs = require("fs");
+
+const server = http.createServer((req, res) => {
+    const log = `${Date.now()}:${req.url}: New REQ Received\n`;
+    fs.appendFile("log.txt", log, (error, data) => {
+        switch (req.url) {
+            case "/": res.end("Home Page");
+                break;
+            case "/about": res.end("I am Raza Ali");
+                break;
+            default: res.end("404 Not Found..");
+        }
+    });
+});
+
+const port = 3000;
+server.listen(port, () => {
+    console.log(`Server is running on the port :${port}`);
+});
+```
+
+### Running the Program
+1. Navigate to the `04_httpServer` directory
+2. Run either server using:
+   ```bash
+   # For basic server
+   node index.js
+   
+   # For server with logging
+   node log.js
+   ```
+
+### Expected Output
+1. **Basic Server**
+   - Server starts and listens on port 3000
+   - Console shows request details when accessed
+   - Browser shows "Hello World from the HTTP Server" message
+
+2. **Server with Logging**
+   - Server starts and listens on port 3000
+   - Requests are logged to `log.txt` with timestamp and URL
+   - Different responses based on URL:
+     - `/` → "Home Page"
+     - `/about` → "I am Raza Ali"
+     - Other URLs → "404 Not Found.."
+
+### Log File Format
+The `log.txt` file contains entries in the following format:
+```
+[timestamp]:[url]: New REQ Received
+```
+Example:
+```
+1744907012419:/: New REQ Received
+1744907017888:/about: New REQ Received
+```
+
+## Prerequisites
+
+- **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
