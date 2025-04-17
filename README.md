@@ -9,6 +9,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 3. [File Handling Example](#file-handling-example)
 4. [HTTP Server Example](#http-server-example)
 5. [URL Handling Example](#url-handling-example)
+6. [HTTP Methods Example](#http-methods-example)
 
 ## Hello World Example
 
@@ -522,6 +523,189 @@ server.listen(port, () => {
    ```
    http://localhost:3000/search?search_query=javascript+mastery
    ```
+
+## Prerequisites
+
+- **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
+
+## HTTP Methods Example
+
+This example demonstrates how to implement a RESTful API using different HTTP methods (GET, POST, PUT, PATCH, DELETE) in Node.js, including proper error handling and CORS support.
+
+### Project Structure
+
+- `methods.js` - RESTful API implementation with all HTTP methods
+- `package.json` - Project configuration
+
+### Features Demonstrated
+
+1. **RESTful API Implementation**
+
+   - GET: Retrieve resources
+   - POST: Create new resources
+   - PUT: Update entire resources
+   - PATCH: Partially update resources
+   - DELETE: Remove resources
+   - OPTIONS: Handle CORS preflight requests
+
+2. **Data Management**
+
+   - In-memory database for user management
+   - JSON data handling
+   - Proper error handling and status codes
+
+3. **Security Features**
+
+   - CORS headers implementation
+   - Input validation
+   - Error handling for invalid requests
+
+4. **API Endpoints**
+   - User management endpoints
+   - Resource identification through URLs
+   - Query parameter handling
+
+### Code Examples
+
+#### RESTful API Server (methods.js)
+
+```javascript
+const http = require("http");
+const fs = require("fs");
+const url = require("url");
+
+// Sample data store
+let users = [
+  { id: 1, name: "Raza Ali", email: "raza@example.com" },
+  { id: 2, name: "Amir Ali", email: "amir@example.com" },
+];
+
+const server = http.createServer((req, res) => {
+  const parsedUrl = url.parse(req.url, true);
+  const path = parsedUrl.pathname;
+  const method = req.method;
+
+  // Set CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  // Handle different HTTP methods
+  switch (method) {
+    case "GET":
+      handleGetRequest(req, res, path, parsedUrl);
+      break;
+    case "POST":
+      handlePostRequest(req, res, path);
+      break;
+    case "PUT":
+      handlePutRequest(req, res, path);
+      break;
+    case "PATCH":
+      handlePatchRequest(req, res, path);
+      break;
+    case "DELETE":
+      handleDeleteRequest(req, res, path);
+      break;
+    default:
+      res.writeHead(405);
+      res.end(JSON.stringify({ error: "Method Not Allowed" }));
+  }
+});
+```
+
+### Running the Program
+
+1. Navigate to the `06_httpMethods` directory
+2. Run the server using:
+   ```bash
+   node methods.js
+   ```
+
+### API Endpoints
+
+1. **GET Requests**
+
+   ```bash
+   # Get all users
+   curl http://localhost:3000/users
+
+   # Get specific user
+   curl http://localhost:3000/users/1
+   ```
+
+2. **POST Request**
+
+   ```bash
+   curl -X POST -H "Content-Type: application/json" -d '{"name":"New User","email":"new@example.com"}' http://localhost:3000/users
+   ```
+
+3. **PUT Request**
+
+   ```bash
+   curl -X PUT -H "Content-Type: application/json" -d '{"name":"Updated User","email":"updated@example.com"}' http://localhost:3000/users/1
+   ```
+
+4. **PATCH Request**
+
+   ```bash
+   curl -X PATCH -H "Content-Type: application/json" -d '{"email":"newemail@example.com"}' http://localhost:3000/users/1
+   ```
+
+5. **DELETE Request**
+   ```bash
+   curl -X DELETE http://localhost:3000/users/1
+   ```
+
+### Expected Output
+
+1. **GET /users**
+
+   ```json
+   [
+     { "id": 1, "name": "Raza Ali", "email": "raza@example.com" },
+     { "id": 2, "name": "Amir Ali", "email": "amir@example.com" }
+   ]
+   ```
+
+2. **GET /users/1**
+
+   ```json
+   { "id": 1, "name": "Raza Ali", "email": "raza@example.com" }
+   ```
+
+3. **POST /users**
+
+   ```json
+   { "id": 3, "name": "New User", "email": "new@example.com" }
+   ```
+
+4. **PUT /users/1**
+
+   ```json
+   { "id": 1, "name": "Updated User", "email": "updated@example.com" }
+   ```
+
+5. **PATCH /users/1**
+
+   ```json
+   { "id": 1, "name": "Raza Ali", "email": "newemail@example.com" }
+   ```
+
+6. **DELETE /users/1**
+   - Status Code: 204 No Content
+
+### Error Handling
+
+The API includes proper error handling for:
+
+- Invalid JSON data (400 Bad Request)
+- Resource not found (404 Not Found)
+- Method not allowed (405 Method Not Allowed)
+- Invalid request paths (404 Not Found)
 
 ## Prerequisites
 
