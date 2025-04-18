@@ -1235,6 +1235,147 @@ This project demonstrates a practical implementation of a REST API using Express
 5. Implement error handling
 6. Add data persistence
 
+
+# REST API Project Documentation
+
+## Overview
+
+This is a simple REST API project built with Express.js that demonstrates CRUD operations on user data.
+
+## Features
+
+- List all users (GET)
+- Get user by ID (GET)
+- Create new user (POST)
+- Update user (PATCH)
+- Delete user (DELETE)
+- HTML view of users
+- JSON API endpoints
+- File-based data storage
+
+## Project Structure
+
+```
+10_project-1-restApi/
+├── server.js          # Main server file
+├── MOCK_DATA.json     # User data file
+├── package.json       # Project config
+└── .gitignore        # Git ignore file
+```
+
+## API Endpoints
+
+### 1. HTML View
+
+- **GET** `/users`
+  - Shows list of all users
+  - Returns HTML with user names
+
+### 2. JSON API
+
+#### Get All Users
+
+- **GET** `/api/users`
+  - Returns all users in JSON
+  - Status: 200 OK
+
+#### Get Single User
+
+- **GET** `/api/users/:id`
+  - Get user by ID
+  - Status: 200 OK
+  - Error: 404 if not found
+
+#### Create User
+
+- **POST** `/api/users`
+  - Create new user
+  - Status: 201 Created
+  - Body: user data
+
+#### Update User
+
+- **PATCH** `/api/users/:id`
+  - Update user by ID
+  - Status: 200 OK
+  - Error: 404 if not found
+
+#### Delete User
+
+- **DELETE** `/api/users/:id`
+  - Delete user by ID
+  - Status: 200 OK
+  - Error: 404 if not found
+
+## How to Use
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start server:
+
+```bash
+node server.js
+```
+
+3. Access API:
+
+- Web view: http://localhost:3000/users
+- API: http://localhost:3000/api/users
+
+## Example Requests
+
+### Create User
+
+```bash
+curl -X POST http://localhost:3000/api/users \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "first_name=John&last_name=Doe&email=john@example.com"
+```
+
+### Get User
+
+```bash
+curl http://localhost:3000/api/users/1
+```
+
+### Update User
+
+```bash
+curl -X PATCH http://localhost:3000/api/users/1 \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "email=newemail@example.com"
+```
+
+### Delete User
+
+```bash
+curl -X DELETE http://localhost:3000/api/users/1
+```
+
+## Technical Details
+
+- Uses Express.js
+- File-based data storage
+- Error handling included
+- Automatic ID generation
+- Data persistence on changes
+
+## Future Plans
+
+- Add input validation
+- Implement authentication
+- Add data validation
+- Improve error handling
+- Add pagination
+- Add search
+- Add logging
+- Add rate limiting
+
+
 ## Prerequisites
 
 - **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
