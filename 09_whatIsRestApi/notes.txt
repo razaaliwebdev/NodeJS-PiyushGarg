@@ -1,0 +1,121 @@
+What is REST API?
+
+REST (Representational State Transfer) is an architectural style for designing networked applications. It uses HTTP methods to perform operations on resources. REST APIs are stateless, meaning each request contains all necessary information.
+
+Key Concepts:
+
+1. HTTP Methods:
+   - GET: Retrieve data (safe, idempotent)
+     * Example: Fetching user profile
+     * No side effects on server
+     * Can be cached
+   - POST: Create new data (not idempotent)
+     * Example: Creating new user
+     * May create multiple resources
+     * Not safe or idempotent
+   - PUT: Update entire resource (idempotent)
+     * Example: Updating user profile
+     * Replaces entire resource
+     * Safe for retries
+   - PATCH: Partially update resource (idempotent)
+     * Example: Updating user email
+     * Modifies specific fields
+     * More efficient than PUT
+   - DELETE: Remove resource (idempotent)
+     * Example: Deleting user account
+     * Removes resource permanently
+     * Safe for retries
+
+2. Data Formats:
+   - JSON: Lightweight, human-readable format
+     * Key-value pairs
+     * Easy to parse
+     * Most common in modern APIs
+   - XML: Structured, verbose format
+     * Tag-based structure
+     * More complex to parse
+     * Common in legacy systems
+   - HTML: Web page structure
+     * For web page responses
+     * Contains markup and content
+     * Used in SSR
+   - Plain Text: Simple text data
+     * For simple responses
+     * No formatting
+     * Lightweight
+
+3. Server-Side Rendering (SSR):
+   - Server generates complete HTML
+     * HTML is ready when page loads
+     * Good for static content
+     * Better for SEO
+   - Better SEO
+     * Search engines see complete content
+     * Better indexing
+     * Higher rankings
+   - Slower initial page load
+     * Server processes everything
+     * More server load
+     * Higher latency
+   - Example: Traditional PHP websites
+     * WordPress
+     * Laravel apps
+     * Server-rendered pages
+
+4. Client-Side Rendering (CSR):
+   - Browser renders content
+     * JavaScript handles rendering
+     * Dynamic updates
+     * Better interactivity
+   - Faster subsequent page loads
+     * Only data is transferred
+     * Less server load
+     * Better user experience
+   - Poorer SEO
+     * Search engines see empty page
+     * Requires special handling
+     * May need SSR for SEO
+   - Example: React, Vue.js apps
+     * Single Page Applications
+     * Modern web apps
+     * Dynamic interfaces
+
+5. Response Methods:
+   - send(): Send any data type
+     * Flexible response type
+     * Sets content-type automatically
+     * Good for mixed content
+   - render(): Generate HTML from templates
+     * Server-side template rendering
+     * Combines data with templates
+     * Used in SSR
+   - json(): Send JSON data
+     * Sets JSON content-type
+     * Parses JavaScript objects
+     * Standard for APIs
+   - redirect(): Redirect to another URL
+     * Changes client location
+     * Handles navigation
+     * Status code 302/301
+
+6. REST Principles:
+   - Stateless: Each request independent
+     * No session storage
+     * Each request self-contained
+     * Better scalability
+   - Client-Server: Clear separation
+     * Frontend/backend separation
+     * Independent evolution
+     * Better maintainability
+   - Cacheable: Responses can be cached
+     * Improves performance
+     * Reduces server load
+     * Better scalability
+   - Uniform Interface: Consistent API design
+     * Standard methods
+     * Predictable behavior
+     * Better usability
+   - Layered System: Multiple layers possible
+     * Load balancers
+     * Security layers
+     * Better architecture 
