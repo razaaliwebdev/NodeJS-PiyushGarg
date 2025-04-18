@@ -1117,3 +1117,124 @@ This example provides a comprehensive overview of REST API concepts and related 
 ## Prerequisites
 
 - **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
+
+## Project 1: REST API Implementation
+
+This project demonstrates a practical implementation of a REST API using Express.js, showcasing various HTTP methods and response types.
+
+### Project Structure
+
+- `server.js` - Main Express.js server implementation
+- `MOCK_DATA.json` - Sample user data
+- `package.json` - Project dependencies
+- `task.txt` - Project requirements and tasks
+
+### Features
+
+1. **User Management API**
+
+   - List all users
+   - Get specific user by ID
+   - Create new users
+   - Update existing users
+   - Delete users
+
+2. **Response Types**
+   - JSON responses for API endpoints
+   - HTML rendering for web interface
+   - Status codes for different operations
+
+### API Endpoints
+
+1. **GET /users**
+
+   - Returns HTML list of all users
+   - Renders user names in an unordered list
+
+2. **GET /api/users**
+
+   - Returns JSON array of all users
+   - Complete user data in JSON format
+
+3. **GET /api/users/:id**
+
+   - Returns specific user by ID
+   - Dynamic path parameter handling
+   - JSON response with user details
+
+4. **POST /api/users**
+
+   - Creates new user
+   - Returns status of operation
+   - (Implementation pending)
+
+5. **PATCH /api/users/:id**
+
+   - Updates existing user
+   - Returns status of operation
+   - (Implementation pending)
+
+6. **DELETE /api/users/:id**
+   - Removes user by ID
+   - Returns status of operation
+   - (Implementation pending)
+
+### Technical Details
+
+1. **Server Setup**
+
+   - Express.js framework
+   - Port 3000
+   - JSON data handling
+   - Route parameter parsing
+
+2. **Data Source**
+
+   - Mock data from mockaroo.com
+   - JSON format
+   - Sample user information
+
+3. **Implementation Status**
+   - ✅ GET endpoints implemented
+   - ⏳ POST/PATCH/DELETE pending
+   - ✅ HTML rendering working
+   - ✅ JSON responses working
+
+### Running the Project
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the server:
+
+   ```bash
+   node server.js
+   ```
+
+3. Access endpoints:
+   - Web interface: http://localhost:3000/users
+   - API endpoints: http://localhost:3000/api/users
+
+### Development Notes
+
+- Uses Express.js for routing
+- Implements both API and web interface
+- Demonstrates REST principles
+- Shows different response types
+- Pending implementations marked
+
+### Next Steps
+
+1. Implement POST endpoint
+2. Complete PATCH functionality
+3. Add DELETE operation
+4. Add input validation
+5. Implement error handling
+6. Add data persistence
+
+## Prerequisites
+
+- **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
