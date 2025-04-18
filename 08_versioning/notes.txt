@@ -1,0 +1,41 @@
+
+Version
+
+^5.1.0
+
+1st part => 5
+2nd part => 1
+3rd part => 0
+
+// 3rd part (Last part) - Minor Fixes (Optional Updates)
+Latest 5.1.0 -> 0
+
+// 2nd part (second part) - Recommended Bug Fixes (Security Fix) 
+Latest 5.1.0 -> 1
+
+
+// 1st part (first part) - Major / Breaking Update
+Latest 5.1.0 -> 5
+
+
+
+// How to install a specific Version of expressjs ? 
+npm install expresss@4.17.2
+
+
+express = ^5.1.0
+5th Version
+
+^5.1.0 | 5.1.0 -> < 6.0.0 
+5.1.1
+5.1.2
+5.1.3
+
+^ - Install all Recommended and Minor Fixes Automatically => Campatible with Version
+
+
+~5.1.1
+~5.1.2
+~5.1.3
+
+5.2.1   -> Nooo // 

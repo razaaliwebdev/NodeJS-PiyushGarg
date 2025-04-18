@@ -11,6 +11,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 5. [URL Handling Example](#url-handling-example)
 6. [HTTP Methods Example](#http-methods-example)
 7. [Express.js Example](#expressjs-example)
+8. [Versioning Example](#versioning-example)
 
 ## Hello World Example
 
@@ -840,6 +841,153 @@ Server is running on the port:3000
 - **express**: ^5.1.0
   - A fast, unopinionated, minimalist web framework for Node.js
   - Provides a robust set of features for web and mobile applications
+
+## Prerequisites
+
+- **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
+
+## Versioning Example
+
+This example demonstrates how to manage package versions in Node.js projects, specifically focusing on Express.js versioning and the semantic versioning (semver) system.
+
+### Project Structure
+
+- `server.js` - Basic Express.js server implementation
+- `package.json` - Project configuration with version specifications
+- `notes.txt` - Versioning documentation and examples
+- `node_modules/` - Dependencies directory
+
+### Features Demonstrated
+
+1. **Semantic Versioning (Semver)**
+
+   - Understanding version numbers (Major.Minor.Patch)
+   - Version number components and their meanings
+   - Version range specifications
+
+2. **Package Version Management**
+
+   - Installing specific package versions
+   - Using version range operators
+   - Understanding version compatibility
+
+3. **Express.js Versioning**
+   - Current Express.js version (^5.1.0)
+   - Version compatibility rules
+   - Update strategies
+
+### Version Number Components
+
+1. **Major Version (First Number)**
+
+   - Example: `5` in `5.1.0`
+   - Represents major/breaking updates
+   - May include backward-incompatible changes
+   - Requires careful consideration before updating
+
+2. **Minor Version (Second Number)**
+
+   - Example: `1` in `5.1.0`
+   - Represents recommended bug fixes and security updates
+   - Backward-compatible new features
+   - Should be updated regularly
+
+3. **Patch Version (Third Number)**
+   - Example: `0` in `5.1.0`
+   - Represents minor fixes and optional updates
+   - Backward-compatible bug fixes
+   - Can be updated safely
+
+### Version Range Operators
+
+1. **Caret (^) Operator**
+
+   ```json
+   "express": "^5.1.0"
+   ```
+
+   - Allows updates to any version compatible with 5.1.0
+   - Will install versions: 5.1.0 to < 6.0.0
+   - Automatically installs recommended and minor fixes
+   - Example compatible versions: 5.1.1, 5.1.2, 5.1.3
+
+2. **Tilde (~) Operator**
+   ```json
+   "express": "~5.1.1"
+   ```
+   - Allows updates to patch versions only
+   - More restrictive than caret operator
+   - Example compatible versions: 5.1.1, 5.1.2, 5.1.3
+
+### Installing Specific Versions
+
+To install a specific version of a package:
+
+```bash
+npm install express@4.17.2
+```
+
+### Code Examples
+
+#### Basic Express Server (server.js)
+
+```javascript
+const express = require("express");
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Hello World from the server");
+});
+
+app.get("/about", (req, res) => {
+  res.send("Hello word from the ABOUT Page...");
+});
+
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on the port : ${port}`);
+});
+```
+
+### Running the Program
+
+1. Navigate to the `08_versioning` directory
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the server:
+   ```bash
+   node server.js
+   ```
+
+### Best Practices
+
+1. **Version Updates**
+
+   - Regularly update patch versions
+   - Review minor version updates
+   - Test thoroughly before major version updates
+
+2. **Version Locking**
+
+   - Use exact versions for production
+   - Document version requirements
+   - Test with different versions
+
+3. **Dependency Management**
+   - Keep dependencies up to date
+   - Monitor for security updates
+   - Use version ranges appropriately
+
+### Dependencies
+
+- **express**: ^5.1.0
+  - Current major version: 5
+  - Minor version: 1
+  - Patch version: 0
+  - Compatible with versions: 5.1.0 to < 6.0.0
 
 ## Prerequisites
 
