@@ -10,6 +10,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 4. [HTTP Server Example](#http-server-example)
 5. [URL Handling Example](#url-handling-example)
 6. [HTTP Methods Example](#http-methods-example)
+7. [Express.js Example](#expressjs-example)
 
 ## Hello World Example
 
@@ -706,6 +707,139 @@ The API includes proper error handling for:
 - Resource not found (404 Not Found)
 - Method not allowed (405 Method Not Allowed)
 - Invalid request paths (404 Not Found)
+
+## Prerequisites
+
+- **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
+
+## Express.js Example
+
+This example demonstrates how to create a basic web server using Express.js, a popular web framework for Node.js. It shows how to handle routes and query parameters in a more elegant way compared to the native HTTP module.
+
+### Project Structure
+
+- `server.js` - Express.js server implementation
+- `package.json` - Project configuration with Express.js dependency
+- `node_modules/` - Dependencies directory
+
+### Features Demonstrated
+
+1. **Express.js Setup**
+
+   - Installing and requiring Express.js
+   - Creating an Express application
+   - Setting up basic routes
+
+2. **Route Handling**
+
+   - Handling GET requests
+   - Using route parameters
+   - Working with query parameters
+   - Sending responses
+
+3. **Query Parameters**
+   - Accessing query parameters using `req.query`
+   - Using query parameters in responses
+   - Dynamic content generation
+
+### Code Examples
+
+#### Express.js Server (server.js)
+
+```javascript
+const express = require("express");
+
+const app = express();
+
+// Home route
+app.get("/", (req, res) => {
+  return res.send("Hello from Home Page");
+});
+
+// About route with query parameters
+app.get("/about", (req, res) => {
+  return res.send(
+    `Hello world from about page, hey ${req.query.name} and you are ${req.query.age} years old.`
+  );
+});
+
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on the port:${port}`);
+});
+```
+
+### Running the Program
+
+1. Navigate to the `07_express` directory
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the server:
+   ```bash
+   npm start
+   ```
+   or
+   ```bash
+   node server.js
+   ```
+
+### API Endpoints
+
+1. **Home Page**
+
+   ```
+   http://localhost:3000/
+   ```
+
+   Response:
+
+   ```
+   Hello from Home Page
+   ```
+
+2. **About Page with Query Parameters**
+   ```
+   http://localhost:3000/about?name=Raza&age=25
+   ```
+   Response:
+   ```
+   Hello world from about page, hey Raza and you are 25 years old.
+   ```
+
+### Expected Output
+
+When you run the server, you should see:
+
+```
+Server is running on the port:3000
+```
+
+### Key Features
+
+1. **Simplified Routing**
+
+   - Clean and intuitive route definitions
+   - Easy parameter handling
+   - Built-in response methods
+
+2. **Query Parameter Handling**
+
+   - Automatic parsing of query parameters
+   - Access via `req.query` object
+   - Type-safe parameter access
+
+3. **Response Handling**
+   - Simple response sending with `res.send()`
+   - Automatic content-type setting
+   - Built-in status code handling
+
+### Dependencies
+
+- **express**: ^5.1.0
+  - A fast, unopinionated, minimalist web framework for Node.js
+  - Provides a robust set of features for web and mobile applications
 
 ## Prerequisites
 
