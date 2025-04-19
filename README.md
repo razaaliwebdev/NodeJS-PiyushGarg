@@ -12,6 +12,9 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 6. [HTTP Methods Example](#http-methods-example)
 7. [Express.js Example](#expressjs-example)
 8. [Versioning Example](#versioning-example)
+9. [REST API Concepts](#rest-api-concepts)
+10. [Project 1: REST API Implementation](#project-1-rest-api-implementation)
+11. [Middlewares Example](#middlewares-example)
 
 ## Hello World Example
 
@@ -1235,7 +1238,6 @@ This project demonstrates a practical implementation of a REST API using Express
 5. Implement error handling
 6. Add data persistence
 
-
 # REST API Project Documentation
 
 ## Overview
@@ -1375,7 +1377,203 @@ curl -X DELETE http://localhost:3000/api/users/1
 - Add logging
 - Add rate limiting
 
-
 ## Prerequisites
 
 - **Node.js and npm (or yarn):** You need to have Node.js and its package manager (npm is included with Node.js, or you can use yarn) installed on your system. You can download them from the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
+
+## Middlewares Example
+
+This example demonstrates how to use Express.js middlewares to handle requests, log activities, and process data in a Node.js application.
+
+### Project Structure
+
+- `server.js` - Express.js server with middleware implementation
+- `log.txt` - Request logging file
+- `MOCK_DATA.json` - Sample user data
+- `package.json` - Project configuration
+
+### Features Demonstrated
+
+1. **Express Middleware**
+
+   - Built-in middleware (express.urlencoded)
+   - Custom middleware for logging
+   - Middleware chaining
+   - Request/response modification
+
+2. **Request Logging**
+
+   - Timestamp-based logging
+   - IP address tracking
+   - HTTP method logging
+   - Path tracking
+   - File-based logging
+
+3. **Data Processing**
+   - URL-encoded data handling
+   - JSON data serving
+   - Request body parsing
+
+### Code Examples
+
+#### Express Server with Middleware (server.js)
+
+```javascript
+const express = require("express");
+const users = require("./MOCK_DATA.json");
+const fs = require("fs");
+
+const app = express();
+
+// Middlewares
+app.use(express.urlencoded({ extended: false }));
+
+// Global Middleware for logging
+app.use((req, res, next) => {
+  fs.appendFile(
+    "log.txt",
+    `\n${Date.now()}:${req.ip}: ${req.method}: ${req.path}\n`,
+    (error, data) => {
+      next();
+    }
+  );
+});
+
+// Routes
+app.get("/", (req, res) => {
+  return res.send("Hello World from the express app");
+});
+
+app.get("/users", (req, res) => {
+  return res.json(users);
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on the PORT:${PORT}`);
+});
+```
+
+### Middleware Types
+
+1. **Built-in Middleware**
+
+   ```javascript
+   app.use(express.urlencoded({ extended: false }));
+   ```
+
+   - Handles URL-encoded form data
+   - Parses request bodies
+   - Makes form data available in `req.body`
+
+2. **Custom Middleware**
+   ```javascript
+   app.use((req, res, next) => {
+     // Logging logic
+     next();
+   });
+   ```
+   - Custom request processing
+   - Logging functionality
+   - Request modification
+
+### Log File Format
+
+The `log.txt` file contains entries in the following format:
+
+```
+[timestamp]:[ip_address]: [http_method]: [path]
+```
+
+Example:
+
+```
+1745082907204:::ffff:127.0.0.1: GET: /users
+```
+
+### Running the Program
+
+1. Navigate to the `11_middlewares` directory
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the server:
+   ```bash
+   node server.js
+   ```
+
+### API Endpoints
+
+1. **Home Page**
+
+   ```
+   GET http://localhost:3000/
+   ```
+
+   Response:
+
+   ```
+   Hello World from the express app
+   ```
+
+2. **Users List**
+   ```
+   GET http://localhost:3000/users
+   ```
+   Response:
+   ```json
+   [
+     {
+       "id": 1,
+       "first_name": "John",
+       "last_name": "Doe",
+       "email": "john@example.com"
+     }
+     // ... more users
+   ]
+   ```
+
+### Key Features
+
+1. **Request Logging**
+
+   - Automatic logging of all requests
+   - Timestamp and IP tracking
+   - Method and path logging
+   - Persistent log storage
+
+2. **Data Handling**
+
+   - URL-encoded form support
+   - JSON data serving
+   - Request body parsing
+
+3. **Middleware Chain**
+   - Sequential processing
+   - Request modification
+   - Response handling
+   - Error handling
+
+### Best Practices
+
+1. **Middleware Order**
+
+   - Place logging middleware early
+   - Order matters in middleware chain
+   - Use next() appropriately
+
+2. **Error Handling**
+
+   - Handle file system errors
+   - Implement error middleware
+   - Log errors appropriately
+
+3. **Performance**
+   - Use async operations
+   - Implement proper error handling
+   - Monitor middleware performance
+
+## Prerequisites
+
+// ... existing code ...
