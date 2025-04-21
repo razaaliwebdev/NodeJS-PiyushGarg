@@ -16,6 +16,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 10. [Project 1: REST API Implementation](#project-1-rest-api-implementation)
 11. [Middlewares Example](#middlewares-example)
 12. [HTTP Headers Example](#http-headers-example)
+13. [HTTP Status Codes Example](#http-status-codes-example)
 
 ## Hello World Example
 
@@ -1753,6 +1754,267 @@ app.listen(PORT, () => {
    - Use standard headers
    - Cache headers appropriately
    - Monitor header size
+
+## Prerequisites
+
+// ... existing code ...
+
+## HTTP Status Codes Example
+
+This example demonstrates the proper use of HTTP status codes in an Express.js application, showing how to handle different response scenarios and error conditions.
+
+### Project Structure
+
+- `server.js` - Express.js server with status code handling
+- `MOCK_DATA.json` - Sample user data
+- `package.json` - Project configuration
+
+### Features Demonstrated
+
+1. **HTTP Status Codes**
+
+   - Success codes (200, 201)
+   - Client error codes (400, 404)
+   - Proper status code usage
+   - Error handling with status codes
+
+2. **Response Handling**
+
+   - JSON responses with status codes
+   - Error responses with status codes
+   - Success responses with status codes
+   - Data validation responses
+
+3. **API Endpoints**
+   - User listing with 200 OK
+   - User creation with 201 Created
+   - User retrieval with 404 Not Found
+   - Input validation with 400 Bad Request
+
+### Code Examples
+
+#### Express Server with Status Codes (server.js)
+
+```javascript
+const express = require("express");
+const users = require("./MOCK_DATA.json");
+const fs = require("fs");
+
+const app = express();
+
+app.use(express.urlencoded({ extended: false }));
+
+// Routes
+app.get("/", (req, res) => {
+  res.send(
+    "Hello World from the server and in this we are learning about STATUS CODES"
+  );
+});
+
+// Get all Users Route
+app.get("/api/users", (req, res) => {
+  res.status(200).json(users);
+});
+
+// Get single User Route
+app.get("/api/users/:id", (req, res) => {
+  const id = +req.params.id;
+  const user = users.find((user) => user.id === id);
+  if (!user) return res.status(404).json({ error: "User not found" });
+  return res.json(user);
+});
+
+// Create New User
+app.post("/api/users", (req, res) => {
+  const body = req.body;
+  users.push({ ...body, id: users.length + 1 });
+  if (
+    !body.first_name ||
+    !body.last_name ||
+    !body.email ||
+    !body.gender ||
+    !body.job_title
+  ) {
+    return res.status(400).json({ message: "All Fields are required.." });
+  }
+  fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (error, data) => {
+    return res.status(201).json({ status: "success", id: users.length });
+  });
+});
+```
+
+### Status Code Usage
+
+1. **200 OK**
+
+   ```javascript
+   res.status(200).json(users);
+   ```
+
+   - Used for successful GET requests
+   - Returns requested data
+   - Standard success response
+
+2. **201 Created**
+
+   ```javascript
+   res.status(201).json({ status: "success", id: users.length });
+   ```
+
+   - Used for successful resource creation
+   - Returns success message and ID
+   - Indicates new resource creation
+
+3. **400 Bad Request**
+
+   ```javascript
+   res.status(400).json({ message: "All Fields are required.." });
+   ```
+
+   - Used for invalid input
+   - Returns error message
+   - Indicates client error
+
+4. **404 Not Found**
+   ```javascript
+   res.status(404).json({ error: "User not found" });
+   ```
+   - Used for missing resources
+   - Returns error message
+   - Indicates resource not found
+
+### Running the Program
+
+1. Navigate to the `13_httpStatusCodes` directory
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the server:
+   ```bash
+   node server.js
+   ```
+
+### API Endpoints
+
+1. **Home Page**
+
+   ```
+   GET http://localhost:3000/
+   ```
+
+   Response:
+
+   ```
+   Hello World from the server and in this we are learning about STATUS CODES
+   ```
+
+2. **Get All Users**
+
+   ```
+   GET http://localhost:3000/api/users
+   ```
+
+   Response (200 OK):
+
+   ```json
+   [
+     {
+       "id": 1,
+       "first_name": "John",
+       "last_name": "Doe",
+       "email": "john@example.com"
+     }
+     // ... more users
+   ]
+   ```
+
+3. **Get Single User**
+
+   ```
+   GET http://localhost:3000/api/users/1
+   ```
+
+   Success Response (200 OK):
+
+   ```json
+   {
+     "id": 1,
+     "first_name": "John",
+     "last_name": "Doe",
+     "email": "john@example.com"
+   }
+   ```
+
+   Error Response (404 Not Found):
+
+   ```json
+   {
+     "error": "User not found"
+   }
+   ```
+
+4. **Create User**
+   ```
+   POST http://localhost:3000/api/users
+   ```
+   Success Response (201 Created):
+   ```json
+   {
+     "status": "success",
+     "id": 2
+   }
+   ```
+   Error Response (400 Bad Request):
+   ```json
+   {
+     "message": "All Fields are required.."
+   }
+   ```
+
+### Key Features
+
+1. **Status Code Management**
+
+   - Proper status code usage
+   - Error handling
+   - Success responses
+   - Validation responses
+
+2. **Error Handling**
+
+   - Input validation
+   - Resource not found
+   - Required fields
+   - Error messages
+
+3. **Data Management**
+   - User creation
+   - User retrieval
+   - Data persistence
+   - File system operations
+
+### Best Practices
+
+1. **Status Code Usage**
+
+   - Use appropriate status codes
+   - Be consistent with responses
+   - Include error messages
+   - Follow HTTP standards
+
+2. **Error Handling**
+
+   - Validate all inputs
+   - Check for missing resources
+   - Provide clear error messages
+   - Use proper status codes
+
+3. **Response Format**
+   - Use consistent JSON structure
+   - Include relevant data
+   - Provide clear messages
+   - Follow REST conventions
 
 ## Prerequisites
 
