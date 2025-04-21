@@ -15,6 +15,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 9. [REST API Concepts](#rest-api-concepts)
 10. [Project 1: REST API Implementation](#project-1-rest-api-implementation)
 11. [Middlewares Example](#middlewares-example)
+12. [HTTP Headers Example](#http-headers-example)
 
 ## Hello World Example
 
@@ -1573,6 +1574,185 @@ Example:
    - Use async operations
    - Implement proper error handling
    - Monitor middleware performance
+
+## Prerequisites
+
+// ... existing code ...
+
+## HTTP Headers Example
+
+This example demonstrates how to work with HTTP headers in an Express.js application, including setting custom headers and accessing request headers.
+
+### Project Structure
+
+- `server.js` - Express.js server with header handling
+- `MOCK_DATA.json` - Sample user data
+- `package.json` - Project configuration
+
+### Features Demonstrated
+
+1. **HTTP Headers**
+
+   - Setting custom response headers
+   - Accessing request headers
+   - Standard header conventions
+   - Header security best practices
+
+2. **Header Types**
+
+   - Custom headers (X- prefix convention)
+   - Standard HTTP headers
+   - Request headers
+   - Response headers
+
+3. **Header Usage**
+   - Response customization
+   - Request inspection
+   - Security headers
+   - Custom metadata
+
+### Code Examples
+
+#### Express Server with Header Handling (server.js)
+
+```javascript
+const express = require("express");
+const users = require("./MOCK_DATA.json");
+
+const app = express();
+
+app.use(express.urlencoded({ extended: false }));
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("Hello World from the server and it's working fine");
+});
+
+app.get("/api/users", (req, res) => {
+  // Setting custom header
+  res.setHeader("X-MyName", "Raza A");
+  // Logging request headers
+  console.log(req.headers);
+  return res.status(200).json(users);
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on the PORT:${PORT}`);
+});
+```
+
+### Header Types and Usage
+
+1. **Custom Headers**
+
+   ```javascript
+   res.setHeader("X-MyName", "Raza A");
+   ```
+
+   - Always prefix custom headers with 'X-'
+   - Used for application-specific metadata
+   - Not standardized by HTTP specification
+
+2. **Request Headers**
+   ```javascript
+   console.log(req.headers);
+   ```
+   - Access all incoming headers
+   - Includes standard and custom headers
+   - Useful for debugging and validation
+
+### Running the Program
+
+1. Navigate to the `12_httpHeaders` directory
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the server:
+   ```bash
+   node server.js
+   ```
+
+### API Endpoints
+
+1. **Home Page**
+
+   ```
+   GET http://localhost:3000/
+   ```
+
+   Response:
+
+   ```
+   Hello World from the server and it's working fine
+   ```
+
+2. **Users List**
+   ```
+   GET http://localhost:3000/api/users
+   ```
+   Response Headers:
+   ```
+   X-MyName: Raza A
+   Content-Type: application/json
+   ```
+   Response Body:
+   ```json
+   [
+     {
+       "id": 1,
+       "first_name": "John",
+       "last_name": "Doe",
+       "email": "john@example.com"
+     }
+     // ... more users
+   ]
+   ```
+
+### Key Features
+
+1. **Header Management**
+
+   - Custom header setting
+   - Request header inspection
+   - Standard header usage
+   - Security considerations
+
+2. **Header Best Practices**
+
+   - X- prefix for custom headers
+   - Proper header naming
+   - Security considerations
+   - Performance impact
+
+3. **Debugging**
+   - Request header logging
+   - Response header inspection
+   - Header validation
+   - Error handling
+
+### Best Practices
+
+1. **Custom Headers**
+
+   - Always use X- prefix
+   - Keep names descriptive
+   - Document header usage
+   - Consider security implications
+
+2. **Security**
+
+   - Validate header values
+   - Sanitize header content
+   - Use secure headers
+   - Implement CORS properly
+
+3. **Performance**
+   - Minimize custom headers
+   - Use standard headers
+   - Cache headers appropriately
+   - Monitor header size
 
 ## Prerequisites
 
