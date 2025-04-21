@@ -18,6 +18,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 12. [HTTP Headers Example](#http-headers-example)
 13. [HTTP Status Codes Example](#http-status-codes-example)
 14. [MongoDB Installation and Basics](#mongodb-installation-and-basics)
+15. [MongoDB Connection and CRUD Operations](#mongodb-connection-and-crud-operations)
 
 ## Hello World Example
 
@@ -2180,6 +2181,302 @@ This example provides instructions and basic commands for MongoDB installation a
    - Verify connection string
    - Check user permissions
    - Review error logs
+
+## Prerequisites
+
+// ... existing code ...
+
+## MongoDB Connection and CRUD Operations
+
+This example demonstrates how to connect to MongoDB using Mongoose and implement CRUD operations with proper error handling and server-side rendering.
+
+### Project Structure
+
+- `server.js` - Express.js server with MongoDB connection and CRUD operations
+- `notes.txt` - MongoDB schema and model documentation
+- `package.json` - Project configuration
+
+### Features Demonstrated
+
+1. **MongoDB Connection**
+
+   - Mongoose connection setup
+   - Error handling
+   - Connection status monitoring
+   - Local MongoDB connection
+
+2. **Schema and Models**
+
+   - User schema definition
+   - Model creation
+   - Schema validation
+   - Timestamps
+
+3. **CRUD Operations**
+
+   - Create (POST)
+   - Read (GET)
+   - Update (PATCH)
+   - Delete (DELETE)
+
+4. **Server-Side Rendering**
+   - HTML template generation
+   - Dynamic content rendering
+   - Styled user interface
+   - Error handling
+
+### Code Examples
+
+#### MongoDB Connection Setup
+
+```javascript
+const mongoose = require("mongoose");
+
+const mongoUrl = `mongodb://127.0.0.1:27017/testing`;
+const connectDB = async () => {
+  try {
+    await mongoose.connect(mongoUrl);
+    console.log(`MongoDB Connected...`);
+  } catch (error) {
+    console.log(`Failed Connect DB:${error}`);
+    process.exit(1);
+  }
+};
+```
+
+#### User Schema Definition
+
+```javascript
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const User = mongoose.model("User", userSchema);
+```
+
+### API Endpoints
+
+1. **Create User**
+
+   ```
+   POST /api/users
+   ```
+
+   Request Body:
+
+   ```json
+   {
+     "name": "John Doe",
+     "email": "john@example.com",
+     "password": "password123"
+   }
+   ```
+
+   Response (201 Created):
+
+   ```json
+   {
+     "message": "User Created Successfully",
+     "user": {
+       "name": "John Doe",
+       "email": "john@example.com",
+       "password": "password123",
+       "_id": "...",
+       "createdAt": "...",
+       "updatedAt": "..."
+     }
+   }
+   ```
+
+2. **Get All Users**
+
+   ```
+   GET /api/users
+   ```
+
+   Response (200 OK):
+
+   ```json
+   [
+     {
+       "_id": "...",
+       "name": "John Doe",
+       "email": "john@example.com",
+       "password": "password123",
+       "createdAt": "...",
+       "updatedAt": "..."
+     }
+   ]
+   ```
+
+3. **Get Single User**
+
+   ```
+   GET /api/users/:id
+   ```
+
+   Response (200 OK):
+
+   ```json
+   {
+     "_id": "...",
+     "name": "John Doe",
+     "email": "john@example.com",
+     "password": "password123",
+     "createdAt": "...",
+     "updatedAt": "..."
+   }
+   ```
+
+4. **Update User**
+
+   ```
+   PATCH /api/users/:id
+   ```
+
+   Request Body:
+
+   ```json
+   {
+     "name": "Updated Name"
+   }
+   ```
+
+   Response (200 OK):
+
+   ```json
+   {
+     "message": "User Updated Successfully",
+     "updatedUser": {
+       "_id": "...",
+       "name": "Updated Name",
+       "email": "john@example.com",
+       "password": "password123",
+       "createdAt": "...",
+       "updatedAt": "..."
+     }
+   }
+   ```
+
+5. **Delete User**
+   ```
+   DELETE /api/users/:id
+   ```
+   Response (200 OK):
+   ```json
+   {
+     "message": "User Deleted Successfully",
+     "deleteUser": {
+       "_id": "...",
+       "name": "John Doe",
+       "email": "john@example.com",
+       "password": "password123",
+       "createdAt": "...",
+       "updatedAt": "..."
+     }
+   }
+   ```
+
+### Server-Side Rendering
+
+1. **User List Page**
+   ```
+   GET /users
+   ```
+   - Renders a styled HTML page
+   - Displays all users in a list
+   - Includes hover effects and responsive design
+   - Handles errors gracefully
+
+### Error Handling
+
+1. **Validation Errors**
+
+   - Required field validation
+   - Data type validation
+   - Custom error messages
+
+2. **Database Errors**
+
+   - Connection errors
+   - Query errors
+   - Duplicate key errors
+
+3. **Server Errors**
+   - Internal server errors
+   - Resource not found
+   - Bad request handling
+
+### Running the Program
+
+1. Navigate to the `15_connectMongodb` directory
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start MongoDB server
+4. Start the application:
+   ```bash
+   node server.js
+   ```
+
+### Key Features
+
+1. **Database Integration**
+
+   - Mongoose connection
+   - Schema validation
+   - Model operations
+   - Error handling
+
+2. **API Design**
+
+   - RESTful endpoints
+   - Proper status codes
+   - JSON responses
+   - Input validation
+
+3. **User Interface**
+   - Server-side rendering
+   - Responsive design
+   - Error handling
+   - User feedback
+
+### Best Practices
+
+1. **Database Operations**
+
+   - Use async/await
+   - Implement error handling
+   - Validate input data
+   - Use proper status codes
+
+2. **Security**
+
+   - Input validation
+   - Error message handling
+   - Password hashing
+   - Data sanitization
+
+3. **Performance**
+   - Efficient queries
+   - Proper indexing
+   - Connection pooling
+   - Error recovery
 
 ## Prerequisites
 
