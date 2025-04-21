@@ -17,6 +17,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 11. [Middlewares Example](#middlewares-example)
 12. [HTTP Headers Example](#http-headers-example)
 13. [HTTP Status Codes Example](#http-status-codes-example)
+14. [MongoDB Installation and Basics](#mongodb-installation-and-basics)
 
 ## Hello World Example
 
@@ -2015,6 +2016,170 @@ app.post("/api/users", (req, res) => {
    - Include relevant data
    - Provide clear messages
    - Follow REST conventions
+
+## Prerequisites
+
+// ... existing code ...
+
+## MongoDB Installation and Basics
+
+This example provides instructions and basic commands for MongoDB installation and usage.
+
+### Project Structure
+
+- `notes.txt` - MongoDB installation and basic commands documentation
+
+### Installation Steps
+
+1. **Download MongoDB**
+
+   - Visit the official MongoDB website: [https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
+   - Download the appropriate version for your operating system
+   - Follow the installation wizard instructions
+
+2. **Install MongoDB Compass**
+
+   - Download MongoDB Compass from: [https://www.mongodb.com/try/download/compass](https://www.mongodb.com/try/download/compass)
+   - Install using the provided installer
+   - Compass provides a GUI for MongoDB management
+
+3. **Verify Installation**
+   - Open a terminal/command prompt
+   - Run `mongod --version` to verify MongoDB installation
+   - Run `mongosh` to start the MongoDB shell
+
+### Basic MongoDB Commands
+
+1. **Database Operations**
+
+   ```javascript
+   // Show all databases
+   show dbs
+
+   // Switch to or create a database
+   use <db_name>
+   ```
+
+2. **Collection Operations**
+
+   ```javascript
+   // Show all collections in current database
+   show collections
+
+   // Find documents in a collection
+   db.coll.find()
+
+   // Insert document into collection
+   db.coll.insert()
+   ```
+
+### Key Features
+
+1. **Database Management**
+
+   - Create and switch databases
+   - List all databases
+   - Database statistics
+   - Database deletion
+
+2. **Collection Management**
+
+   - Create collections
+   - List collections
+   - Collection statistics
+   - Collection deletion
+
+3. **Document Operations**
+   - Insert documents
+   - Find documents
+   - Update documents
+   - Delete documents
+
+### Best Practices
+
+1. **Database Design**
+
+   - Use meaningful database names
+   - Follow naming conventions
+   - Plan database structure
+   - Consider scalability
+
+2. **Collection Design**
+
+   - Use appropriate collection names
+   - Consider document relationships
+   - Plan for indexing
+   - Optimize for queries
+
+3. **Document Structure**
+   - Use consistent field names
+   - Consider data types
+   - Plan for updates
+   - Include timestamps
+
+### Common Operations
+
+1. **Creating a Database**
+
+   ```javascript
+   use myDatabase
+   ```
+
+2. **Creating a Collection**
+
+   ```javascript
+   db.createCollection("users");
+   ```
+
+3. **Inserting Documents**
+
+   ```javascript
+   db.users.insert({
+     name: "John Doe",
+     email: "john@example.com",
+     age: 30,
+   });
+   ```
+
+4. **Finding Documents**
+
+   ```javascript
+   // Find all documents
+   db.users.find();
+
+   // Find with query
+   db.users.find({ age: { $gt: 25 } });
+   ```
+
+### MongoDB Compass
+
+1. **Features**
+
+   - Visual database management
+   - Document editing
+   - Query building
+   - Performance monitoring
+
+2. **Usage**
+   - Connect to MongoDB server
+   - Browse databases and collections
+   - Create and edit documents
+   - Run queries and aggregations
+
+### Troubleshooting
+
+1. **Common Issues**
+
+   - Connection problems
+   - Authentication errors
+   - Permission issues
+   - Service not running
+
+2. **Solutions**
+   - Check MongoDB service status
+   - Verify connection string
+   - Check user permissions
+   - Review error logs
 
 ## Prerequisites
 
