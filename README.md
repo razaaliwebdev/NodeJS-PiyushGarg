@@ -19,6 +19,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 13. [HTTP Status Codes Example](#http-status-codes-example)
 14. [MongoDB Installation and Basics](#mongodb-installation-and-basics)
 15. [MongoDB Connection and CRUD Operations](#mongodb-connection-and-crud-operations)
+16. [MVC Architecture Implementation](#mvc-architecture-implementation)
 
 ## Hello World Example
 
@@ -2477,6 +2478,222 @@ const User = mongoose.model("User", userSchema);
    - Proper indexing
    - Connection pooling
    - Error recovery
+
+## Prerequisites
+
+// ... existing code ...
+
+## MVC Architecture Implementation
+
+This example demonstrates a complete MVC (Model-View-Controller) architecture implementation in a Node.js application, showcasing proper separation of concerns and modular design.
+
+### Project Structure
+
+```
+16_mvc/
+├── controllers/         # Business logic handlers
+│   └── userControllers.js
+├── models/             # Data models and schemas
+│   └── userModel.js
+├── routes/             # Route definitions
+│   └── userRoutes.js
+├── middlewares/        # Custom middleware
+│   └── index.js
+├── db/                 # Database configuration
+│   └── db.js
+├── .env                # Environment variables
+├── server.js           # Main application file
+└── package.json        # Project configuration
+```
+
+### Features Demonstrated
+
+1. **MVC Architecture**
+
+   - Model layer for data handling
+   - View layer for presentation
+   - Controller layer for business logic
+   - Clear separation of concerns
+
+2. **Modular Design**
+
+   - Separate route handling
+   - Isolated controller logic
+   - Independent model definitions
+   - Reusable middleware
+
+3. **Environment Configuration**
+   - Environment variable management
+   - Database configuration
+   - Port configuration
+   - Logging setup
+
+### Code Examples
+
+#### Main Server Setup (server.js)
+
+```javascript
+import express from "express";
+import connectDB from "./db/db.js";
+import "dotenv/config";
+import router from "./routes/userRoutes.js";
+import logReqRes from "./middlewares/index.js";
+
+const app = express();
+
+// Middlewares
+app.use(express.urlencoded({ extended: false }));
+app.use(logReqRes("log.txt"));
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("Hello world from the server and it's working fine");
+});
+
+app.use("/api/user", router);
+
+// Database Connection
+connectDB()
+  .then(() => {
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on the PORT:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log("Failed to connect DB ...", error);
+  });
+```
+
+### Directory Structure
+
+1. **Controllers (`/controllers`)**
+
+   - Handle business logic
+   - Process requests
+   - Manage responses
+   - Interact with models
+
+2. **Models (`/models`)**
+
+   - Define data structures
+   - Handle database operations
+   - Implement data validation
+   - Manage data relationships
+
+3. **Routes (`/routes`)**
+
+   - Define API endpoints
+   - Map URLs to controllers
+   - Handle request routing
+   - Manage middleware
+
+4. **Middlewares (`/middlewares`)**
+
+   - Implement request logging
+   - Handle authentication
+   - Manage error handling
+   - Process request data
+
+5. **Database (`/db`)**
+   - Configure database connection
+   - Manage connection pooling
+   - Handle connection errors
+   - Implement reconnection logic
+
+### API Endpoints
+
+1. **Test Route**
+
+   ```
+   GET /
+   ```
+
+   Response:
+
+   ```
+   Hello world from the server and it's working fine
+   ```
+
+2. **User Routes**
+   ```
+   /api/user
+   ```
+   - Follows RESTful conventions
+   - Implements CRUD operations
+   - Uses proper status codes
+   - Includes error handling
+
+### Environment Configuration
+
+1. **Environment Variables**
+
+   ```
+   PORT=4000
+   MONGODB_URI=mongodb://localhost:27017/mvc-app
+   ```
+
+2. **Configuration Files**
+   - `.env` for environment variables
+   - `package.json` for dependencies
+   - `.gitignore` for version control
+
+### Running the Program
+
+1. Navigate to the `16_mvc` directory
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Configure environment variables
+4. Start the application:
+   ```bash
+   node server.js
+   ```
+
+### Key Features
+
+1. **Architecture**
+
+   - Clean separation of concerns
+   - Modular code organization
+   - Scalable structure
+   - Maintainable design
+
+2. **Error Handling**
+
+   - Global error handling
+   - Request logging
+   - Database error handling
+   - Validation errors
+
+3. **Performance**
+   - Efficient routing
+   - Optimized database queries
+   - Middleware optimization
+   - Response caching
+
+### Best Practices
+
+1. **Code Organization**
+
+   - Follow MVC pattern
+   - Use meaningful names
+   - Implement proper error handling
+   - Document code
+
+2. **Security**
+
+   - Environment variable protection
+   - Input validation
+   - Error message handling
+   - Authentication
+
+3. **Maintenance**
+   - Clear directory structure
+   - Consistent coding style
+   - Proper documentation
+   - Version control
 
 ## Prerequisites
 
