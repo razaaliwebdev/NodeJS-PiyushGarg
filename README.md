@@ -20,6 +20,7 @@ This repository contains Node.js examples demonstrating basic concepts and featu
 14. [MongoDB Installation and Basics](#mongodb-installation-and-basics)
 15. [MongoDB Connection and CRUD Operations](#mongodb-connection-and-crud-operations)
 16. [MVC Architecture Implementation](#mvc-architecture-implementation)
+17. [URL Shortener Implementation](#url-shortener-implementation)
 
 ## Hello World Example
 
@@ -2694,6 +2695,218 @@ connectDB()
    - Consistent coding style
    - Proper documentation
    - Version control
+
+## Prerequisites
+
+// ... existing code ...
+
+## URL Shortener Implementation
+
+This example demonstrates a URL shortener service built with Node.js, Express, and MongoDB, following MVC architecture principles.
+
+### Project Structure
+
+```
+17_urlShortener/
+├── controllers/         # Business logic handlers
+│   └── urlControllers.js
+├── models/             # Data models and schemas
+│   └── urlModel.js
+├── routes/             # Route definitions
+│   └── urlRoutes.js
+├── middlewares/        # Custom middleware
+├── db/                 # Database configuration
+│   └── db.js
+├── .env                # Environment variables
+├── server.js           # Main application file
+└── package.json        # Project configuration
+```
+
+### Features Demonstrated
+
+1. **URL Shortening**
+
+   - Generate short URLs
+   - Store original URLs
+   - Redirect to original URLs
+   - Track URL usage
+
+2. **MVC Architecture**
+
+   - Model for URL data
+   - Controller for URL operations
+   - Routes for API endpoints
+   - Middleware for request handling
+
+3. **Database Integration**
+   - MongoDB connection
+   - URL storage
+   - Data retrieval
+   - Error handling
+
+### Code Examples
+
+#### Main Server Setup (server.js)
+
+```javascript
+import express from "express";
+import connectDB from "./db/db.js";
+import "dotenv/config";
+import urlRouter from "./routes/urlRoutes.js";
+
+const app = express();
+
+// Middlewares
+app.use(express.json());
+
+// Routes
+app.use("/url", urlRouter);
+
+// Database Connection
+connectDB()
+  .then(() => {
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on the PORT:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(`MongoDB Connection error:${error}`);
+  });
+```
+
+### Directory Structure
+
+1. **Controllers (`/controllers`)**
+
+   - Handle URL shortening logic
+   - Process URL redirects
+   - Manage URL data
+   - Handle errors
+
+2. **Models (`/models`)**
+
+   - Define URL schema
+   - Handle URL validation
+   - Manage URL storage
+   - Track URL statistics
+
+3. **Routes (`/routes`)**
+
+   - Define URL endpoints
+   - Handle URL creation
+   - Manage URL redirects
+   - Process URL updates
+
+4. **Database (`/db`)**
+   - Configure MongoDB connection
+   - Handle connection errors
+   - Manage database operations
+   - Implement reconnection logic
+
+### API Endpoints
+
+1. **Create Short URL**
+
+   ```
+   POST /url
+   ```
+
+   Request Body:
+
+   ```json
+   {
+     "url": "https://example.com/long-url"
+   }
+   ```
+
+   Response:
+
+   ```json
+   {
+     "shortUrl": "http://localhost:4000/url/abc123",
+     "originalUrl": "https://example.com/long-url"
+   }
+   ```
+
+2. **Redirect to Original URL**
+   ```
+   GET /url/:shortId
+   ```
+   Response:
+   - Redirects to original URL
+   - 404 if URL not found
+
+### Environment Configuration
+
+1. **Environment Variables**
+
+   ```
+   PORT=4000
+   MONGODB_URI=mongodb://localhost:27017/url-shortener
+   ```
+
+2. **Configuration Files**
+   - `.env` for environment variables
+   - `package.json` for dependencies
+   - `.gitignore` for version control
+
+### Running the Program
+
+1. Navigate to the `17_urlShortener` directory
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Configure environment variables
+4. Start the application:
+   ```bash
+   node server.js
+   ```
+
+### Key Features
+
+1. **URL Management**
+
+   - Short URL generation
+   - Original URL storage
+   - URL redirection
+   - URL tracking
+
+2. **Error Handling**
+
+   - Invalid URL validation
+   - Database errors
+   - URL not found
+   - Server errors
+
+3. **Performance**
+   - Efficient URL lookup
+   - Fast redirection
+   - Database optimization
+   - Caching support
+
+### Best Practices
+
+1. **URL Generation**
+
+   - Use unique identifiers
+   - Implement collision handling
+   - Consider URL length
+   - Validate URLs
+
+2. **Security**
+
+   - URL validation
+   - Input sanitization
+   - Rate limiting
+   - Access control
+
+3. **Maintenance**
+   - URL expiration
+   - Usage tracking
+   - Error logging
+   - Performance monitoring
 
 ## Prerequisites
 
