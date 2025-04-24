@@ -14,7 +14,7 @@ export const handleGenerateNewShorUrl = async (req, res) => {
             visitedHistory: [],
         });
 
-        return res.status(200).json({ id: shortId, newUrl });
+        return res.render("home",{id:shortId})
     } catch (error) {
         return res.status(500).json({ message: "Internal server error:", error });
     };
